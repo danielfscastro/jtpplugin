@@ -3,19 +3,31 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 <modelVersion>4.0.0</modelVersion>
 
-<groupId>br.com.dfsc</groupId>
+<groupId>io.github.danielfscastro</groupId>
 <artifactId>jtpplugin</artifactId>
 <version>1.0-SNAPSHOT</version>
 <packaging>maven-plugin</packaging>
 
+
+
   <properties>
     <java.version>11</java.version>
-    <maven.compiler.source>7</maven.compiler.source>
-    <maven.compiler.target>7</maven.compiler.target>
+    <maven.compiler.source>8</maven.compiler.source>
+    <maven.compiler.target>8</maven.compiler.target>
   </properties>
 
-<name>Jtp Generator</name>
-<description>A Maven plugin to generate .jtp files for hpsa</description>
+  <name>Jtp Generator</name>
+  <description>A Maven plugin to generate .jtp files for hpsa</description>
+  <url>https://github.com/danielfscastro/jtpplugin</url>
+
+  <developers>
+    <developer>
+      <name>Daniel Castro</name>
+      <email>daniel.fs.castro@gmail.com</email>
+      <organization>dao</organization>
+      <organizationUrl>https://github.com/danielfscastro</organizationUrl>
+    </developer>
+  </developers>
 
 <licenses>
   <license>
@@ -23,6 +35,12 @@
     <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
   </license>
 </licenses>
+
+  <scm>
+    <connection>scm:git:git://github.com/danielfscastro/jtpplugin.git</connection>
+    <developerConnection>scm:git:ssh://github.com:danielfscastro/jtpplugin.git</developerConnection>
+    <url>https://github.com/danielfscastro/jtpplugin/tree/master</url>
+  </scm>
 
 <dependencies>
   <dependency>
@@ -77,12 +95,108 @@
         <target>${java.version}</target>
       </configuration>
     </plugin>
+    <plugin>
+      <groupId>org.sonatype.central</groupId>
+      <artifactId>central-publishing-maven-plugin</artifactId>
+      <version>0.7.0</version>
+      <extensions>true</extensions>
+      <configuration>
+        <publishingServerId>central</publishingServerId>
+      </configuration>
+    </plugin>
+    <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-source-plugin</artifactId>
+      <version>3.2.1</version>
+      <executions>
+        <execution>
+          <id>attach-sources</id>
+          <goals>
+            <goal>jar</goal> <!-- Gera o JAR de fontes -->
+          </goals>
+        </execution>
+      </executions>
+    </plugin>
+
+    <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-javadoc-plugin</artifactId>
+      <version>3.3.1</version>
+      <executions>
+        <execution>
+          <id>attach-javadocs</id>
+          <goals>
+            <goal>jar</goal> <!-- Gera o JAR de javadoc -->
+          </goals>
+        </execution>
+      </executions>
+    </plugin>
+    <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-jar-plugin</artifactId>
+      <version>3.2.0</version>
+      <configuration>
+        <archive>
+          <manifest>
+            <addClasspath>true</addClasspath>
+          </manifest>
+        </archive>
+      </configuration>
+    </plugin>
+    <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-help-plugin</artifactId>
+      <version>3.4.0</version>
+      <executions>
+        <execution>
+          <id>generate-pom</id>
+          <goals>
+            <goal>effective-pom</goal>
+          </goals>
+          <phase>package</phase>
+        </execution>
+      </executions>
+      <configuration>
+        <output>${project.build.directory}/${artifactId}-${project.version}.pom</output>
+      </configuration>
+    </plugin>
+    <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-gpg-plugin</artifactId>
+      <version>3.1.0</version>
+      <executions>
+        <execution>
+          <id>sign-artifacts</id>
+          <phase>verify</phase>
+          <goals>
+            <goal>sign</goal>
+          </goals>
+        </execution>
+      </executions>
+    </plugin>
+    <plugin>
+      <groupId>net.ju-n.maven.plugins</groupId>
+      <artifactId>checksum-maven-plugin</artifactId>
+      <version>1.2</version>
+      <executions>
+        <execution>
+          <goals>
+            <goal>artifacts</goal>
+          </goals>
+        </execution>
+      </executions>
+    </plugin>
   </plugins>
 </build>
+
   <distributionManagement>
+    <repository>
+      <id>central</id>
+      <url>https://central.sonatype.com/repository/maven-releases/</url>
+    </repository>
     <snapshotRepository>
-      <id>github</id>
-      <url>https://maven.pkg.github.com/danielfscastro/jtpplugin</url>
+      <id>central</id>
+      <url>https://central.sonatype.com/repository/maven-snapshots/</url>
     </snapshotRepository>
   </distributionManagement>
 </project>
