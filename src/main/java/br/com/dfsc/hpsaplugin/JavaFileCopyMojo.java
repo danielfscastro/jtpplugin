@@ -11,17 +11,26 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.List;
 
 @Mojo(name = "copy-java", defaultPhase = LifecyclePhase.PROCESS_SOURCES)
 public class JavaFileCopyMojo extends AbstractMojo {
 
-    @Parameter(property = "source", required = true)
-    private String source;
-
-    @Parameter(property = "destination", required = true)
-    private String destination;
+    @Parameter
+    private List<SourceDestinationPair> files;
 
     public void execute() throws MojoExecutionException {
+
+        if (files == null || files.isEmpty()) {
+            throw new MojoExecutionException("No source/destination pairs provided.");
+        }
+
+        for (SourceDestinationPair pair : files) {
+            processFile(pair.getSource(), pair.getDestination());
+        }
+    }
+
+    private void processFile(String source, String destination) throws MojoExecutionException  {
         try (BufferedReader reader = new BufferedReader(new FileReader(source));
              BufferedWriter writer = new BufferedWriter(new FileWriter(destination))) {
 
