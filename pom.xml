@@ -5,7 +5,7 @@
 
 <groupId>io.github.danielfscastro</groupId>
 <artifactId>jtpplugin</artifactId>
-<version>1.0-SNAPSHOT</version>
+<version>1.1-SNAPSHOT</version>
 <packaging>maven-plugin</packaging>
 
 
@@ -26,6 +26,12 @@
       <email>daniel.fs.castro@gmail.com</email>
       <organization>dao</organization>
       <organizationUrl>https://github.com/danielfscastro</organizationUrl>
+    </developer>
+    <developer>
+      <name>Renato Louro</name>
+      <email>louro.renato@gmail.com</email>
+      <organization>Silo</organization>
+      <organizationUrl>https://github.com/renatolouro</organizationUrl>
     </developer>
   </developers>
 
@@ -173,6 +179,9 @@
           </goals>
         </execution>
       </executions>
+      <configuration>
+        <skip>true</skip>
+      </configuration>
     </plugin>
     <plugin>
       <groupId>net.ju-n.maven.plugins</groupId>
