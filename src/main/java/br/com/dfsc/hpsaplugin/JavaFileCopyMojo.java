@@ -47,7 +47,7 @@ public class JavaFileCopyMojo extends AbstractMojo {
                 }
 
                 // Verificar se a linha contém a declaração de uma classe
-                if (line.matches(".*\\bclass\\b.*")) {
+                if (line.trim().startsWith("public class")) {
                     insideClass = true; // Entrando no corpo da classe
                     continue; // Ignorar a linha da declaração da classe
                 }
