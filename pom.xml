@@ -5,7 +5,7 @@
 
 <groupId>io.github.danielfscastro</groupId>
 <artifactId>jtpplugin</artifactId>
-<version>1.2-SNAPSHOT</version>
+<version>1.2</version>
 <packaging>maven-plugin</packaging>
 
 
@@ -71,11 +71,6 @@
     <version>4.8.2</version>
     <scope>test</scope>
   </dependency>
-  <dependency>
-    <groupId>org.sonatype.central</groupId>
-    <artifactId>central-publishing-maven-plugin</artifactId>
-    <version>0.7.0</version>
-  </dependency>
 </dependencies>
 
 <build>
@@ -102,42 +97,6 @@
       </configuration>
     </plugin>
     <plugin>
-      <groupId>org.sonatype.central</groupId>
-      <artifactId>central-publishing-maven-plugin</artifactId>
-      <version>0.7.0</version>
-      <extensions>true</extensions>
-      <configuration>
-        <publishingServerId>central</publishingServerId>
-      </configuration>
-    </plugin>
-    <plugin>
-      <groupId>org.apache.maven.plugins</groupId>
-      <artifactId>maven-source-plugin</artifactId>
-      <version>3.2.1</version>
-      <executions>
-        <execution>
-          <id>attach-sources</id>
-          <goals>
-            <goal>jar</goal> <!-- Gera o JAR de fontes -->
-          </goals>
-        </execution>
-      </executions>
-    </plugin>
-
-    <plugin>
-      <groupId>org.apache.maven.plugins</groupId>
-      <artifactId>maven-javadoc-plugin</artifactId>
-      <version>3.3.1</version>
-      <executions>
-        <execution>
-          <id>attach-javadocs</id>
-          <goals>
-            <goal>jar</goal> <!-- Gera o JAR de javadoc -->
-          </goals>
-        </execution>
-      </executions>
-    </plugin>
-    <plugin>
       <groupId>org.apache.maven.plugins</groupId>
       <artifactId>maven-jar-plugin</artifactId>
       <version>3.2.0</version>
@@ -147,23 +106,6 @@
             <addClasspath>true</addClasspath>
           </manifest>
         </archive>
-      </configuration>
-    </plugin>
-    <plugin>
-      <groupId>org.apache.maven.plugins</groupId>
-      <artifactId>maven-help-plugin</artifactId>
-      <version>3.4.0</version>
-      <executions>
-        <execution>
-          <id>generate-pom</id>
-          <goals>
-            <goal>effective-pom</goal>
-          </goals>
-          <phase>package</phase>
-        </execution>
-      </executions>
-      <configuration>
-        <output>${project.build.directory}/${artifactId}-${project.version}.pom</output>
       </configuration>
     </plugin>
     <plugin>
@@ -179,9 +121,6 @@
           </goals>
         </execution>
       </executions>
-      <configuration>
-        <skip>true</skip>
-      </configuration>
     </plugin>
     <plugin>
       <groupId>net.ju-n.maven.plugins</groupId>
@@ -200,12 +139,9 @@
 
   <distributionManagement>
     <repository>
-      <id>central</id>
-      <url>https://central.sonatype.com/repository/maven-releases/</url>
+      <id>repsy</id>
+      <name>My Private Maven Repository on Repsy</name>
+      <url>https://repo.repsy.io/mvn/danielfscastro/jtpplugin</url>
     </repository>
-    <snapshotRepository>
-      <id>central</id>
-      <url>https://central.sonatype.com/repository/maven-snapshots/</url>
-    </snapshotRepository>
   </distributionManagement>
 </project>
